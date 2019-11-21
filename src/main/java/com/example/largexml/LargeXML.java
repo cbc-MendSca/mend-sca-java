@@ -2,22 +2,15 @@ package com.example.largexml;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @EnableAutoConfiguration
