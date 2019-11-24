@@ -9,10 +9,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ReducePosts extends DefaultHandler {
+public class AnalyseHandler extends DefaultHandler {
 
     private AnalyseResult analyseResult = new AnalyseResult();
-    private ResultDetails resultDetails = new ResultDetails();
+    private AnalyseResultDetails resultDetails = new AnalyseResultDetails();
     private int totalScore = 0;
     private int totalScoreCount = 0;
     private StringBuilder data = null;

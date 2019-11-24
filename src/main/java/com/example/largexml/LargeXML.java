@@ -34,7 +34,7 @@ public class LargeXML {
         try {
             InputStream is = url.openStream();
             SAXParser saxParser = saxParserFactory.newSAXParser();
-            ReducePosts handler = new ReducePosts();
+            AnalyseHandler handler = new AnalyseHandler();
             saxParser.parse(is, handler);
             analyseResult = handler.getAnalyseResult();
         } catch (Exception e) {

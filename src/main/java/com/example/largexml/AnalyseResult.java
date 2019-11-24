@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class AnalyseResult {
     private Date analyseDate;
-    private ResultDetails details;
+    private AnalyseResultDetails details;
 
     public Date getAnalyseDate() {
         return analyseDate;
@@ -14,11 +14,11 @@ public class AnalyseResult {
         this.analyseDate = analyseDate;
     }
 
-    public ResultDetails getDetails() {
+    public AnalyseResultDetails getDetails() {
         return details;
     }
 
-    public void setDetails(ResultDetails details) {
+    public void setDetails(AnalyseResultDetails details) {
         this.details = details;
     }
 }
