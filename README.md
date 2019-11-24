@@ -16,6 +16,7 @@ See [example](https://docs.spring.io/spring-boot/docs/current/reference/html/get
 ## Run
 ```bash
 $ export MAVEN_OPTS="-Xms16m -Xmx32m"
+$ mvn dependency:tree
 $ mvn spring-boot:run
 ```
 
@@ -33,7 +34,7 @@ $ docker push yolkhovyy/large-xml
 ```
 ## Run
 ```bash
-$ $ docker run -e "JAVA_OPTS=-Xms32m -Xmx32m" -p 8080:8080 -t yolkhovyy/large-xml
+$ docker run -e "JAVA_OPTS=-Xms16m -Xmx32m" -p 8080:8080 -t yolkhovyy/large-xml
 ```
 
 # Test
@@ -43,5 +44,5 @@ $ curl -i -X POST -H "Content-Type:application/json" -d '{"url":"https://s3-eu-w
 $ curl -i -X POST -H "Content-Type:application/json" -d '{"url":"https://s3-eu-west-1.amazonaws.com/merapar-assessment/3dprinting-posts.xml"}' 'http://localhost:8080/analyze/'
 ```
 
-## ?
+## Integration, etc
 See [example](https://spring.io/guides/gs/testing-web/)
