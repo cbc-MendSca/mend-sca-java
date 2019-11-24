@@ -2,9 +2,9 @@ package com.example.largexml;
 
 import java.util.Date;
 
-public class AnalyseResult {
+public class AnalyzeResult {
     private Date analyseDate;
-    private AnalyseResultDetails details;
+    private AnalyzeResultDetails details;
 
     public Date getAnalyseDate() {
         return analyseDate;
@@ -14,11 +14,11 @@ public class AnalyseResult {
         this.analyseDate = analyseDate;
     }
 
-    public AnalyseResultDetails getDetails() {
+    public AnalyzeResultDetails getDetails() {
         return details;
     }
 
-    public void setDetails(AnalyseResultDetails details) {
+    public void setDetails(AnalyzeResultDetails details) {
         this.details = details;
     }
 }
