@@ -9,10 +9,16 @@ The files are based on stack overflow site with data per topic.
 * [805Kb](https://s3-eu-west-1.amazonaws.com/merapar-assessment/3dprinting-posts.xml)
 * [71Kb](https://s3-eu-west-1.amazonaws.com/merapar-assessment/arabic-posts.xml)
 
+# Mvn
+```bash
+$ export MAVEN_OPTS="-Xms16m -Xmx32m"
+$ mvn spring-boot:run
+```
+
 # Curl
 ```bash
-curl -i -X POST -H "Content-Type:application/json" -d '{"url":"https://s3-eu-west-1.amazonaws.com/merapar-assessment/arabic-posts.xml"}' 'http://localhost:8080/analyze/'
-curl -i -X POST -H "Content-Type:application/json" -d '{"url":"https://s3-eu-west-1.amazonaws.com/merapar-assessment/3dprinting-posts.xml"}' 'http://localhost:8080/analyze/'
+$ curl -i -X POST -H "Content-Type:application/json" -d '{"url":"https://s3-eu-west-1.amazonaws.com/merapar-assessment/arabic-posts.xml"}' 'http://localhost:8080/analyze/'
+$ curl -i -X POST -H "Content-Type:application/json" -d '{"url":"https://s3-eu-west-1.amazonaws.com/merapar-assessment/3dprinting-posts.xml"}' 'http://localhost:8080/analyze/'
 ```
 
 # Spring Boot
