@@ -10,7 +10,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ReducePosts extends DefaultHandler {
 
-    private Post post = null;
     private Result result = new Result();
     private ResultDetails resultDetails = new ResultDetails();
     private StringBuilder data = null;
@@ -25,35 +24,22 @@ public class ReducePosts extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         data = new StringBuilder();
         if (qName.equalsIgnoreCase("row")) {
-            post = new Post();
-            post.setId(parseInt(attributes.getValue("Id")));
-            post.setPostTypeId(parseInt(attributes.getValue("PostTypeId")));
-            post.setAcceptedAnswerId(parseInt(attributes.getValue("AcceptedAnswerId")));
-            post.setCreationDate(parseDateTime(attributes.getValue("CreationDate")));
-            post.setScore(parseInt(attributes.getValue("Score")));
-            post.setViewCount(parseInt(attributes.getValue("ViewCount")));
-            post.setBody(attributes.getValue("Body"));
-            post.setOwnerUserId(parseInt(attributes.getValue("OwnerUserId")));
-            post.setLastEditorUserId(parseInt(attributes.getValue("LastEditorUserId")));
-            post.setLastEditDate(parseDateTime(attributes.getValue("LastEditDate")));
-            post.setLastActivityDate(parseDateTime(attributes.getValue("LastActivityDate")));
-            post.setTitle(attributes.getValue("Title"));
-            post.setTags(attributes.getValue("Tags"));
-            post.setAnswerCount(parseInt(attributes.getValue("AnswerCount")));
-            post.setCommentCount(parseInt(attributes.getValue("CommentCount")));
+            int acceptedAnswerId = parseInt(attributes.getValue("AcceptedAnswerId"));
+            int score = parseInt(attributes.getValue("Score"));
+            Date creationDate = parseDateTime(attributes.getValue("CreationDate"));
 
             resultDetails.setTotalPosts(resultDetails.getTotalPosts() + 1);
-            if (post.getAcceptedAnswerId() > 0) {
+            if (acceptedAnswerId > 0) {
                 resultDetails.setTotalAcceptedPosts(resultDetails.getTotalAcceptedPosts() + 1);
             }
-            totalScore += post.getScore();
+            totalScore += score;
 
-            if (post.getCreationDate().compareTo(resultDetails.getFirstPost()) < 0) {
-                resultDetails.setFirstPost(post.getCreationDate());
+            if (creationDate.compareTo(resultDetails.getFirstPost()) < 0) {
+                resultDetails.setFirstPost(creationDate);
             }
 
-            if (post.getCreationDate().compareTo(resultDetails.getLastPost()) > 0) {
-                resultDetails.setLastPost(post.getCreationDate());
+            if (creationDate.compareTo(resultDetails.getLastPost()) > 0) {
+                resultDetails.setLastPost(creationDate);
             }
         }
     }
