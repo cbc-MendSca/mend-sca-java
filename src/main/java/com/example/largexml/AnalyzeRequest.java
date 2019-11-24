@@ -1,6 +1,6 @@
 package com.example.largexml;
 
-public class AnalyseRequest {
+public class AnalyzeRequest {
 
     private String url;
 

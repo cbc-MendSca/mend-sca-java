@@ -33,7 +33,7 @@ $ docker push yolkhovyy/large-xml
 ```
 ## Run
 ```bash
-$ $ docker run -e "JAVA_OPTS=-Xms16m -Xmx32m" -p 8080:8080 -t yolkhovyy/large-xml
+$ $ docker run -e "JAVA_OPTS=-Xms32m -Xmx32m" -p 8080:8080 -t yolkhovyy/large-xml
 ```
 
 # Test
