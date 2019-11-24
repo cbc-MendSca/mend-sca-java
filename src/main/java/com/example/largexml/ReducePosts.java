@@ -3,6 +3,7 @@ package com.example.largexml;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -10,12 +11,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ReducePosts extends DefaultHandler {
 
-    private Post post = null;
     private Result result = new Result();
     private ResultDetails resultDetails = new ResultDetails();
-    private StringBuilder data = null;
-
     private int totalScore = 0;
+    private int totalScoreCount = 0;
+    private StringBuilder data = null;
 
     public Result getResult() {
         return result;
@@ -25,35 +25,27 @@ public class ReducePosts extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         data = new StringBuilder();
         if (qName.equalsIgnoreCase("row")) {
-            post = new Post();
-            post.setId(parseInt(attributes.getValue("Id")));
-            post.setPostTypeId(parseInt(attributes.getValue("PostTypeId")));
-            post.setAcceptedAnswerId(parseInt(attributes.getValue("AcceptedAnswerId")));
-            post.setCreationDate(parseDateTime(attributes.getValue("CreationDate")));
-            post.setScore(parseInt(attributes.getValue("Score")));
-            post.setViewCount(parseInt(attributes.getValue("ViewCount")));
-            post.setBody(attributes.getValue("Body"));
-            post.setOwnerUserId(parseInt(attributes.getValue("OwnerUserId")));
-            post.setLastEditorUserId(parseInt(attributes.getValue("LastEditorUserId")));
-            post.setLastEditDate(parseDateTime(attributes.getValue("LastEditDate")));
-            post.setLastActivityDate(parseDateTime(attributes.getValue("LastActivityDate")));
-            post.setTitle(attributes.getValue("Title"));
-            post.setTags(attributes.getValue("Tags"));
-            post.setAnswerCount(parseInt(attributes.getValue("AnswerCount")));
-            post.setCommentCount(parseInt(attributes.getValue("CommentCount")));
+            Optional<Integer> acceptedAnswerId = parseInt(attributes.getValue("AcceptedAnswerId"));
+            Optional<Integer> score = parseInt(attributes.getValue("Score"));
+            Optional<Date> creationDate = parseDate(attributes.getValue("CreationDate"));
 
             resultDetails.setTotalPosts(resultDetails.getTotalPosts() + 1);
-            if (post.getAcceptedAnswerId() > 0) {
+
+            if (acceptedAnswerId.isPresent() && acceptedAnswerId.get() > 0) {
                 resultDetails.setTotalAcceptedPosts(resultDetails.getTotalAcceptedPosts() + 1);
             }
-            totalScore += post.getScore();
 
-            if (post.getCreationDate().compareTo(resultDetails.getFirstPost()) < 0) {
-                resultDetails.setFirstPost(post.getCreationDate());
-            }
+            totalScore += score.orElse(0);
+            totalScoreCount += score.isPresent() ? 1 : 0;
 
-            if (post.getCreationDate().compareTo(resultDetails.getLastPost()) > 0) {
-                resultDetails.setLastPost(post.getCreationDate());
+            if (creationDate.isPresent()) {
+                Date cd = creationDate.get();
+                if (cd.compareTo(resultDetails.getFirstPost()) < 0) {
+                    resultDetails.setFirstPost(cd);
+                }
+                if (cd.compareTo(resultDetails.getLastPost()) > 0) {
+                    resultDetails.setLastPost(cd);
+                }
             }
         }
     }
@@ -61,8 +53,8 @@ public class ReducePosts extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equalsIgnoreCase("posts")) {
-            if (resultDetails.getTotalPosts() > 0) {
-                resultDetails.setAvgScore((totalScore + resultDetails.getTotalPosts() / 2) / resultDetails.getTotalPosts());
+            if (totalScoreCount > 0) {
+                resultDetails.setAvgScore((totalScore + totalScoreCount / 2) / totalScoreCount);
             }
             result.setDetails(resultDetails);
             result.setAnalyseDate(new Date());
@@ -74,24 +66,23 @@ public class ReducePosts extends DefaultHandler {
         data.append(new String(ch, start, length));
     }
 
-    private int parseInt(String a) {
-        if (a != null && !a.isEmpty()) {
-            return Integer.parseInt(a);
-        }
-        return 0;
-    }
-
-    private Date parseDateTime(String a) {
-        Date date = new Date(0);
+    private Optional<Integer> parseInt(String a) {
+        Optional<Integer> result = Optional.empty();
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(a);
+            result = Optional.of(Integer.parseInt(a));
         } catch (Exception e) {
-//            e.printStackTrace();
         }
-        return date;
+        return result;
     }
 
-
+    private Optional<Date> parseDate(String a) {
+        Optional<Date> result = Optional.empty();
+        try {
+            result = Optional.of(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(a));
+        } catch (Exception e) {
+        }
+        return result;
+    }
 }
 
 
