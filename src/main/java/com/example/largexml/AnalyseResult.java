@@ -2,7 +2,7 @@ package com.example.largexml;
 
 import java.util.Date;
 
-public class Result {
+public class AnalyseResult {
     private Date analyseDate;
     private ResultDetails details;
 

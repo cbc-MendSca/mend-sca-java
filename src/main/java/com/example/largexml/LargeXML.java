@@ -26,9 +26,9 @@ public class LargeXML {
     }
 
     @PostMapping(path= "/analyze", consumes = "application/json", produces = "application/json")
-    public Result analyse(@RequestBody AnalyseRequest analyseRequest, final HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public AnalyseResult analyse(@RequestBody AnalyseRequest analyseRequest, final HttpServletRequest request, HttpServletResponse response) throws Exception {
         URL url = new URL(analyseRequest.getUrl());
-        Result result = null;
+        AnalyseResult analyseResult = null;
 
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
@@ -36,11 +36,11 @@ public class LargeXML {
             SAXParser saxParser = saxParserFactory.newSAXParser();
             ReducePosts handler = new ReducePosts();
             saxParser.parse(is, handler);
-            result = handler.getResult();
+            analyseResult = handler.getAnalyseResult();
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return result;
+        return analyseResult;
     }
 }

@@ -11,14 +11,14 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ReducePosts extends DefaultHandler {
 
-    private Result result = new Result();
+    private AnalyseResult analyseResult = new AnalyseResult();
     private ResultDetails resultDetails = new ResultDetails();
     private int totalScore = 0;
     private int totalScoreCount = 0;
     private StringBuilder data = null;
 
-    public Result getResult() {
-        return result;
+    public AnalyseResult getAnalyseResult() {
+        return analyseResult;
     }
 
     @Override
@@ -56,8 +56,8 @@ public class ReducePosts extends DefaultHandler {
             if (totalScoreCount > 0) {
                 resultDetails.setAvgScore((totalScore + totalScoreCount / 2) / totalScoreCount);
             }
-            result.setDetails(resultDetails);
-            result.setAnalyseDate(new Date());
+            analyseResult.setDetails(resultDetails);
+            analyseResult.setAnalyseDate(new Date());
         }
     }
 
