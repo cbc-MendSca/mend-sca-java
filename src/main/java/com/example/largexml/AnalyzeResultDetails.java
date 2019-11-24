@@ -2,7 +2,7 @@ package com.example.largexml;
 
 import java.util.Date;
 
-public class ResultDetails {
+public class AnalyzeResultDetails {
     private Date firstPost = new Date(Long.MAX_VALUE);
     private Date lastPost = new Date(0);
     private int totalPosts = 0;

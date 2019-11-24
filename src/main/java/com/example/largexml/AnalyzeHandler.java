@@ -9,16 +9,16 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ReducePosts extends DefaultHandler {
+public class AnalyzeHandler extends DefaultHandler {
 
-    private AnalyseResult analyseResult = new AnalyseResult();
-    private ResultDetails resultDetails = new ResultDetails();
+    private AnalyzeResult analyzeResult = new AnalyzeResult();
+    private AnalyzeResultDetails resultDetails = new AnalyzeResultDetails();
     private int totalScore = 0;
     private int totalScoreCount = 0;
     private StringBuilder data = null;
 
-    public AnalyseResult getAnalyseResult() {
-        return analyseResult;
+    public AnalyzeResult getAnalyzeResult() {
+        return analyzeResult;
     }
 
     @Override
@@ -56,8 +56,8 @@ public class ReducePosts extends DefaultHandler {
             if (totalScoreCount > 0) {
                 resultDetails.setAvgScore((totalScore + totalScoreCount / 2) / totalScoreCount);
             }
-            analyseResult.setDetails(resultDetails);
-            analyseResult.setAnalyseDate(new Date());
+            analyzeResult.setDetails(resultDetails);
+            analyzeResult.setAnalyseDate(new Date());
         }
     }
 
