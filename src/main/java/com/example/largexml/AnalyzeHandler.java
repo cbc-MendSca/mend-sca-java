@@ -31,22 +31,23 @@ public class AnalyzeHandler extends DefaultHandler {
 
             resultDetails.setTotalPosts(resultDetails.getTotalPosts() + 1);
 
-            if (acceptedAnswerId.isPresent() && acceptedAnswerId.get() > 0) {
-                resultDetails.setTotalAcceptedPosts(resultDetails.getTotalAcceptedPosts() + 1);
-            }
+            acceptedAnswerId.ifPresent(id -> {
+                if (id > 0) {
+                    resultDetails.setTotalAcceptedPosts(resultDetails.getTotalAcceptedPosts() + 1);
+                }
+            });
 
             totalScore += score.orElse(0);
             totalScoreCount += score.isPresent() ? 1 : 0;
 
-            if (creationDate.isPresent()) {
-                Date cd = creationDate.get();
+            creationDate.ifPresent(cd -> {
                 if (cd.compareTo(resultDetails.getFirstPost()) < 0) {
                     resultDetails.setFirstPost(cd);
                 }
                 if (cd.compareTo(resultDetails.getLastPost()) > 0) {
                     resultDetails.setLastPost(cd);
                 }
-            }
+            });
         }
     }
 
